@@ -37,7 +37,7 @@ public class ApplicationController {
         return applicationService.createApplication(applicationEntity);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ApplicationEntity updateApplication(@PathVariable Long id, @RequestBody ApplicationEntity applicationEntity){
         return applicationService.updateApplication(id, applicationEntity);
     }

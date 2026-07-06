@@ -1,9 +1,12 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../api/axios';
 
 function ApplicationForm() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const isEditMode = Boolean(id);
+
   const [formData, setFormData] = useState({
     company: '',
     jobTitle: '',
@@ -12,8 +15,20 @@ function ApplicationForm() {
     jobUrl: '',
     notes: '',
   });
+
+  const [loading, setLoading] = useState(isEditMode);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (isEditMode) {
+      // FIX 1: Changed single quotes to backticks for string interpolation
+      api.get(`/applications/${id}`)
+        .then(res => setFormData(res.data))
+        .catch(err => setError(err.message))
+        .finally(() => setLoading(false));
+    }
+  }, [id, isEditMode]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,15 +39,23 @@ function ApplicationForm() {
     setSubmitting(true);
     setError(null);
 
-    api.post('/applications', formData)
-      .then(() => navigate('/'))
+    // FIX 2: Changed single quotes to backticks for the PUT request
+    const request = isEditMode
+      ? api.put(`/applications/${id}`, formData)
+      : api.post('/applications', formData);
+
+    request.then(() => navigate('/'))
       .catch(err => setError(err.message))
       .finally(() => setSubmitting(false));
+
+    // FIX 3: Deleted the redundant api.post() that was hardcoded down here
   };
+
+  if (loading) return <p>Loading ...</p>;
 
   return (
     <div>
-      <h1>Add Application</h1>
+      <h1>{isEditMode ? 'Edit Application' : 'Add Application'}</h1>
       {error && <p>Error: {error}</p>}
       <form onSubmit={handleSubmit}>
         <div>

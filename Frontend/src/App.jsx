@@ -8,6 +8,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ApplicationList />} />
         <Route path="/new" element={<ApplicationForm />} />
+        <Route path="/edit/:id" element={<ApplicationForm/>}/>
       </Routes>
     </BrowserRouter>
   );
