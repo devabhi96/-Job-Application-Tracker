@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api/axios';
+import ApplicationCard from '../components/ApplicationCard';
 
 function ApplicationList() {
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [statusFilter , setStatusFilter] = useState('');
 
 useEffect(() => {
         fetchApplications();
-    }, []);
+    }, [statusFilter]);
 
     const fetchApplications = () => {
-        api.get('/applications')
+        setLoading(true);
+        const url = statusFilter ? `/applications?status=${statusFilter}` : '/applications';
+        api.get(url)
             .then(res => setApplications(res.data))
             .catch(err => setError(err.message))
             .finally(() => setLoading(false));
@@ -36,17 +40,27 @@ const handleDelete = (id) => {
         <div>
             <h1>Job Applications</h1>
             <Link to="/new">+ Add Application</Link>
+
+            <div>
+    <label>Filter by status: </label>
+    <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+        <option value="">All</option>
+        <option value="APPLIED">Applied</option>
+        <option value="INTERVIEWING">Interviewing</option>
+        <option value="OFFER">Offer</option>
+        <option value="REJECTED">Rejected</option>
+        <option value="WITHDRAWN">Withdrawn</option>
+    </select>
+</div>
+
+
             {applications.length === 0 ? (
                 <p>No applications yet.</p>
 
             ) : (
             <ul>
                     {applications.map(app => (
-                        <li key={app.id}>
-                            {app.company} - {app.jobTitle} ({app.status})
-                            <Link to={`/edit/${app.id}`}>Edit</Link>
-                            <button onClick={() => handleDelete(app.id)}>Delete</button>
-                        </li>
+                     <ApplicationCard key={app.id} app={app} onDelete={handleDelete} />
                     ))}
                 </ul>
             )}
