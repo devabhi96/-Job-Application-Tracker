@@ -9,6 +9,18 @@ function ApplicationList() {
     const [error, setError] = useState(null);
     const [statusFilter , setStatusFilter] = useState('');
 
+    const statusCounts = applications.reduce((acc, app) => {
+        acc[app.status] = (acc[app.status] || 0) + 1;
+        return acc;
+    }, {});
+
+    const sortedApplications = [...applications].sort(
+        (a, b) => new Date(b.dateApplied) - new Date(a.dateApplied)
+    );
+
+
+    useEffect(() => {
+
 useEffect(() => {
         fetchApplications();
     }, [statusFilter]);
@@ -53,13 +65,21 @@ const handleDelete = (id) => {
     </select>
 </div>
 
+            <p>
+                Total: {applications.length} | 
+                Applied: {statusCounts.APPLIED || 0} | 
+                Interviewing: {statusCounts.INTERVIEWING || 0} | 
+                Offer: {statusCounts.OFFER || 0} | 
+                Rejected: {statusCounts.REJECTED || 0}
+            </p>
+
 
             {applications.length === 0 ? (
                 <p>No applications yet.</p>
 
             ) : (
             <ul>
-                    {applications.map(app => (
+                    {sortedApplications.map(app => (
                      <ApplicationCard key={app.id} app={app} onDelete={handleDelete} />
                     ))}
                 </ul>
