@@ -54,9 +54,12 @@ function ApplicationForm() {
   if (loading) return <p>Loading ...</p>;
 
   return (
-    <div>
+    <div className="page">
+      <div className ="form-page">
       <h1>{isEditMode ? 'Edit Application' : 'Add Application'}</h1>
-      {error && <p>Error: {error}</p>}
+      {error && <p className ="error-text">Error: {error}</p>}
+        
+
       <form onSubmit={handleSubmit}>
         <div>
           <label>Company</label>
@@ -92,6 +95,7 @@ function ApplicationForm() {
           {submitting ? 'Saving...' : 'Save'}
         </button>
       </form>
+    </div>
     </div>
   );
 }

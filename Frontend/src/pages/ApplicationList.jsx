@@ -19,7 +19,7 @@ function ApplicationList() {
     );
 
 
-    useEffect(() => {
+    
 
 useEffect(() => {
         fetchApplications();
@@ -48,13 +48,13 @@ const handleDelete = (id) => {
             .catch(err => setError(err.message));
     };
 
-    return (
-        <div>
+  return (
+        <div className="page">
             <h1>Job Applications</h1>
-            <Link to="/new">+ Add Application</Link>
+            <Link className="add-link" to="/new">+ Add Application</Link>
+            <div className="filter-bar">
+                <label>Filter by status: </label>
 
-            <div>
-    <label>Filter by status: </label>
     <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
         <option value="">All</option>
         <option value="APPLIED">Applied</option>
@@ -65,7 +65,7 @@ const handleDelete = (id) => {
     </select>
 </div>
 
-            <p>
+            <p className ="summary">
                 Total: {applications.length} | 
                 Applied: {statusCounts.APPLIED || 0} | 
                 Interviewing: {statusCounts.INTERVIEWING || 0} | 
@@ -78,7 +78,7 @@ const handleDelete = (id) => {
                 <p>No applications yet.</p>
 
             ) : (
-            <ul>
+            <ul className ="card-list">
                     {sortedApplications.map(app => (
                      <ApplicationCard key={app.id} app={app} onDelete={handleDelete} />
                     ))}
