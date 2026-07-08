@@ -4,6 +4,7 @@ package com.devAbhi.resumeTracker.controller;
 import com.devAbhi.resumeTracker.entity.ApplicationEntity;
 import com.devAbhi.resumeTracker.entity.ApplicationStatus;
 import com.devAbhi.resumeTracker.service.ApplicationService;
+import jakarta.validation.Valid;
 import jdk.jshell.Snippet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class ApplicationController {
     }
 
     @PostMapping
-    public ApplicationEntity createApplication(@RequestBody ApplicationEntity applicationEntity){
+    public ApplicationEntity createApplication(@Valid @RequestBody ApplicationEntity applicationEntity){
         return applicationService.createApplication(applicationEntity);
     }
 

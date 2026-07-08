@@ -17,9 +17,9 @@ public class ApplicationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message ="Company name is required")
     private String company;
-    @NotBlank
+    @NotBlank(message ="Job title is required")
     private String jobTitle;
 
     @Enumerated(EnumType.STRING)
