@@ -2,6 +2,7 @@ package com.devAbhi.resumeTracker.repository;
 
 import com.devAbhi.resumeTracker.entity.ApplicationEntity;
 import com.devAbhi.resumeTracker.entity.ApplicationStatus;
+import com.devAbhi.resumeTracker.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +13,6 @@ public interface ApplicationRepository extends JpaRepository<ApplicationEntity, 
 
         List<ApplicationEntity> findByStatus(ApplicationStatus status);
 
+        List<ApplicationEntity> findByUser(UserEntity user);
 
 }

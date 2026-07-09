@@ -19,7 +19,7 @@ function ApplicationForm() {
   const [loading, setLoading] = useState(isEditMode);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
-
+ 
   useEffect(() => {
     if (isEditMode) {
       // FIX 1: Changed single quotes to backticks for string interpolation

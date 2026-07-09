@@ -25,6 +25,7 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
     private JwtUtil jwtUtil;
 
     @PostMapping("/register")
