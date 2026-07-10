@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../api/axios';
+import api from '../api/axiosConfig';
 import ApplicationCard from '../components/ApplicationCard';
 
 function ApplicationList() {
@@ -26,7 +26,9 @@ function ApplicationList() {
     );
 
     useEffect(() => {
+        console.log("MY TOKEN IS: ", localStorage.getItem('jwtToken'));
         fetchApplications();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [statusFilter]);
 
     const fetchApplications = () => {

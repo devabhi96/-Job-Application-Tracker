@@ -1,15 +1,14 @@
 package com.devAbhi.resumeTracker.controller;
 
-
 import com.devAbhi.resumeTracker.entity.ApplicationEntity;
 import com.devAbhi.resumeTracker.entity.ApplicationStatus;
 import com.devAbhi.resumeTracker.service.ApplicationService;
 import jakarta.validation.Valid;
-import jdk.jshell.Snippet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -21,21 +20,23 @@ public class ApplicationController {
 
     @GetMapping
     public List<ApplicationEntity> getApplications(
-        @RequestParam(required = false) ApplicationStatus status){
-    if(status != null){
-        return applicationService.getApplicationsByStatus(status);
-    }
-    return applicationService.getAllApplications();
+            @RequestParam(required = false) ApplicationStatus status){
+        if(status != null){
+            return applicationService.getApplicationsByStatus(status);
         }
+        return applicationService.getAllApplications();
+    }
 
-        @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ApplicationEntity getApplication(@PathVariable Long id){
         return applicationService.getApplicationById(id);
     }
 
+    // --- UPDATED POST METHOD ---
     @PostMapping
-    public ApplicationEntity createApplication(@Valid @RequestBody ApplicationEntity applicationEntity){
-        return applicationService.createApplication(applicationEntity);
+    public ApplicationEntity createApplication(@Valid @RequestBody ApplicationEntity applicationEntity, Principal principal){
+        // Pass the username (from the JWT) to the service
+        return applicationService.createApplication(applicationEntity, principal.getName());
     }
 
     @PutMapping("/{id}")
@@ -48,5 +49,4 @@ public class ApplicationController {
         applicationService.deleteApplication(id);
         return ResponseEntity.noContent().build();
     }
-
 }
