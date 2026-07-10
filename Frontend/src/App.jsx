@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
+
 // Import your existing pages
 import ApplicationList from './pages/ApplicationList';
 import ApplicationForm from './pages/ApplicationForm';

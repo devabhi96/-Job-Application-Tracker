@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from './api/axiosConfig'; // Import your custom Axios instance
+import './css/Login.css';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -33,11 +34,12 @@ const Login = () => {
     };
 
     return (
+        <div className ="login-page">
         <div className="login-container">
             <h2>Login</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={handleLogin}>
-                <div>
+            {error && <p className="login-error">{error}</p>}
+            <form onSubmit={handleLogin} className="login-form">
+                <div className="login-username">
                     <label>Username: </label>
                     <input 
                         type="text" 
@@ -46,7 +48,7 @@ const Login = () => {
                         required 
                     />
                 </div>
-                <div>
+                <div className="login-password">
                     <label>Password: </label>
                     <input 
                         type="password" 
@@ -57,6 +59,7 @@ const Login = () => {
                 </div>
                 <button type="submit">Login</button>
             </form>
+        </div>
         </div>
     );
 };

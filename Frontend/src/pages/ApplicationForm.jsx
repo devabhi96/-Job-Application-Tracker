@@ -39,7 +39,7 @@ function ApplicationForm() {
     setSubmitting(true);
     setError(null);
 
-    // FIX 2: Changed single quotes to backticks for the PUT request
+  
     const request = isEditMode
       ? api.put(`/applications/${id}`, formData)
       : api.post('/applications', formData);
@@ -48,7 +48,6 @@ function ApplicationForm() {
       .catch(err => setError(err.message))
       .finally(() => setSubmitting(false));
 
-    // FIX 3: Deleted the redundant api.post() that was hardcoded down here
   };
 
   if (loading) return <p>Loading ...</p>;
@@ -76,7 +75,6 @@ function ApplicationForm() {
             <option value="INTERVIEWING">Interviewing</option>
             <option value="OFFER">Offer</option>
             <option value="REJECTED">Rejected</option>
-            <option value="WITHDRAWN">Withdrawn</option>
           </select>
         </div>
         <div>

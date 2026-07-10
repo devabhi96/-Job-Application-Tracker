@@ -76,7 +76,6 @@ function ApplicationList() {
                     <option value="INTERVIEWING">Interviewing</option>
                     <option value="OFFER">Offer</option>
                     <option value="REJECTED">Rejected</option>
-                    <option value="WITHDRAWN">Withdrawn</option>
                 </select>
             </div>
 
