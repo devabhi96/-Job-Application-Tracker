@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-
+import ViewApplication from './pages/ViewApplication';
 
 // Import your existing pages
 import ApplicationList from './pages/ApplicationList';
@@ -61,7 +61,21 @@ function App() {
             path = "/register"
             element={<Register/>}
             /> 
+
+  <Route 
+            path ="/view/:id"
+            element={
+                <ProtectedRoute>
+                    <ViewApplication/>
+                    </ProtectedRoute>
+            }
+        />
+
+
       </Routes>
+
+      
+
     </BrowserRouter>
   );
 }

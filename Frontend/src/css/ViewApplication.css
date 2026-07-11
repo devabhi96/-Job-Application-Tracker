@@ -1,0 +1,94 @@
+/* ---- Page wrapper (reuse for all inner pages: list, form, view) ---- */
+.page {
+    max-width: 700px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 36px 40px;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    border-top: 4px solid #2ecc71;
+}
+
+.page a {
+    color: #27ae60;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.page a:hover {
+    text-decoration: underline;
+}
+
+.page h1 {
+    font-size: 26px;
+    color: #2b2f33;
+    margin: 4px 0 0;
+}
+
+/* ---- Status badge (in case not already styled elsewhere) ---- */
+.status-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    background: #eafaf1;
+    color: #1e8449;
+}
+
+/* ---- Detail rows ---- */
+.view-details {
+    margin-top: 28px;
+    border-top: 1px solid #eceff1;
+}
+
+.view-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 0;
+    border-bottom: 1px solid #eceff1;
+}
+
+.view-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #8a9199; /* muted gray */
+}
+
+.view-value {
+    font-size: 15px;
+    color: #2b2f33;
+}
+
+.view-value a {
+    color: #2ecc71;
+    font-weight: 600;
+}
+
+.view-notes {
+    margin: 0;
+    line-height: 1.5;
+    white-space: pre-wrap; /* preserves line breaks the user typed in notes */
+}
+
+/* ---- Edit button ---- */
+.page button {
+    padding: 12px 22px;
+    background: #2ecc71;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.page button:hover {
+    background: #27ae60;
+}
