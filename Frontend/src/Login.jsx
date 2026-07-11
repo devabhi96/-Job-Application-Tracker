@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import api from './api/axiosConfig'; // Import your custom Axios instance
 import './css/Login.css';
 
@@ -59,6 +59,9 @@ const Login = () => {
                 </div>
                 <button type="submit">Login</button>
             </form>
+            <p style={{ marginTop: '16px', textAlign: 'center', fontSize: '14px' }}>
+    Don't have an account? <Link to="/register">Register</Link>
+</p>
         </div>
         </div>
     );

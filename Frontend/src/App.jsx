@@ -7,6 +7,7 @@ import ApplicationList from './pages/ApplicationList';
 import ApplicationForm from './pages/ApplicationForm';
 // Import the new Login component we built
 import Login from './Login'; 
+import Register from './Register';
 
 // 1. Create a quick wrapper to protect your private routes
 const ProtectedRoute = ({ children }) => {
@@ -55,6 +56,11 @@ function App() {
                 </ProtectedRoute>
             } 
         />
+
+        <Route
+            path = "/register"
+            element={<Register/>}
+            /> 
       </Routes>
     </BrowserRouter>
   );

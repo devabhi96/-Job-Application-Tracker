@@ -15,4 +15,5 @@ public interface ApplicationRepository extends JpaRepository<ApplicationEntity, 
 
         List<ApplicationEntity> findByUser(UserEntity user);
 
+        List<ApplicationEntity> findByStatusAndUser(ApplicationStatus status, UserEntity user);
 }

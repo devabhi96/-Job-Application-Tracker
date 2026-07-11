@@ -19,33 +19,41 @@ public class ApplicationService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<ApplicationEntity> getAllApplications(){
-        return applicationRepository.findAll();
+    public List<ApplicationEntity> getAllApplications(String username){
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return applicationRepository.findByUser(user);
     }
 
-    public ApplicationEntity getApplicationById(Long id){
-        return applicationRepository.findById(id)
+    public ApplicationEntity getApplicationById(Long id, String username){
+        ApplicationEntity app = applicationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Application Not Found " + id));
+
+        if (!app.getUser().getUsername().equals(username)) {
+            throw new RuntimeException("Not authorized to view this application");
+        }
+        return app;
     }
 
-    public List<ApplicationEntity> getApplicationsByStatus(ApplicationStatus status){
-        return applicationRepository.findByStatus(status);
+    public List<ApplicationEntity> getApplicationsByStatus(ApplicationStatus status,String username){
+       UserEntity user = userRepository.findByUsername(username)
+               .orElseThrow(() -> new RuntimeException("User not found"));
+        return applicationRepository.findByStatusAndUser(status,user);
     }
 
-    // --- Fixed Method ---
+
     public ApplicationEntity createApplication(ApplicationEntity application, String username){
-        // Changed "User" to "UserEntity"
+
         UserEntity user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Attach the UserEntity to the application before saving
         application.setUser(user);
 
         return applicationRepository.save(application);
     }
 
-    public ApplicationEntity updateApplication(Long id, ApplicationEntity updated){
-        ApplicationEntity existing = getApplicationById(id);
+    public ApplicationEntity updateApplication(Long id, ApplicationEntity updated,String username){
+        ApplicationEntity existing = getApplicationById(id,username);
         existing.setCompany(updated.getCompany());
         existing.setJobTitle(updated.getJobTitle());
         existing.setStatus(updated.getStatus());
@@ -55,7 +63,8 @@ public class ApplicationService {
         return applicationRepository.save(existing);
     }
 
-    public void deleteApplication(Long id){
-        applicationRepository.deleteById(id);
+    public void deleteApplication(Long id,String username){
+        ApplicationEntity existing = getApplicationById(id,username);
+        applicationRepository.delete(existing);
     }
 }

@@ -20,16 +20,16 @@ public class ApplicationController {
 
     @GetMapping
     public List<ApplicationEntity> getApplications(
-            @RequestParam(required = false) ApplicationStatus status){
+            @RequestParam(required = false) ApplicationStatus status, Principal principal){
         if(status != null){
-            return applicationService.getApplicationsByStatus(status);
+            return applicationService.getApplicationsByStatus(status, principal.getName());
         }
-        return applicationService.getAllApplications();
+        return applicationService.getAllApplications(principal.getName());
     }
 
     @GetMapping("/{id}")
-    public ApplicationEntity getApplication(@PathVariable Long id){
-        return applicationService.getApplicationById(id);
+    public ApplicationEntity getApplication(@PathVariable Long id, Principal principal){
+        return applicationService.getApplicationById(id, principal.getName());
     }
 
     // --- UPDATED POST METHOD ---
@@ -40,13 +40,13 @@ public class ApplicationController {
     }
 
     @PutMapping("/{id}")
-    public ApplicationEntity updateApplication(@PathVariable Long id, @RequestBody ApplicationEntity applicationEntity){
-        return applicationService.updateApplication(id, applicationEntity);
+    public ApplicationEntity updateApplication(@PathVariable Long id, @RequestBody ApplicationEntity applicationEntity,Principal principal){
+        return applicationService.updateApplication(id, applicationEntity, principal.getName());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteApplication(@PathVariable Long id){
-        applicationService.deleteApplication(id);
+    public ResponseEntity<?> deleteApplication(@PathVariable Long id,Principal principal){
+        applicationService.deleteApplication(id, principal.getName());
         return ResponseEntity.noContent().build();
     }
 }
