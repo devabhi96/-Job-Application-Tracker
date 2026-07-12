@@ -8,6 +8,7 @@ function ApplicationList() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [statusFilter, setStatusFilter] = useState('');
+    const [search, setSearch] = useState('');
 
     const navigate = useNavigate();
 
@@ -23,6 +24,10 @@ function ApplicationList() {
 
     const sortedApplications = [...applications].sort(
         (a, b) => new Date(b.dateApplied) - new Date(a.dateApplied)
+    );
+
+    const visibleApplications = sortedApplications.filter(app =>
+        app.company.toLowerCase().includes(search.toLowerCase())
     );
 
     useEffect(() => {
@@ -77,6 +82,14 @@ function ApplicationList() {
                     <option value="OFFER">Offer</option>
                     <option value="REJECTED">Rejected</option>
                 </select>
+
+                <input
+                    type="text"
+                    placeholder="Search by company.."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="search-input"
+                />
             </div>
 
             <p className="summary">
@@ -87,11 +100,11 @@ function ApplicationList() {
                 Rejected: {statusCounts.REJECTED || 0}
             </p>
 
-            {applications.length === 0 ? (
-                <p>No applications yet.</p>
+            {visibleApplications.length === 0 ? (
+                <p>No applications found.</p>
             ) : (
                 <ul className="card-list">
-                    {sortedApplications.map(app => (
+                    {visibleApplications.map(app => (
                         <ApplicationCard key={app.id} app={app} onDelete={handleDelete} />
                     ))}
                 </ul>

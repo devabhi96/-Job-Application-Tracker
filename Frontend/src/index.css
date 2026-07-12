@@ -188,3 +188,11 @@ h1 {
 textarea {
     resize: vertical;
 }
+
+.search-input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  margin-left: 12px;
+}
