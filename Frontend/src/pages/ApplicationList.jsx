@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../api/axiosConfig';
 import ApplicationCard from '../components/ApplicationCard';
+import UpcomingInterviews from '../components/UpcomingInterviews';
 
 function ApplicationList() {
     const [applications, setApplications] = useState([]);
@@ -71,6 +72,8 @@ function ApplicationList() {
                 </button>
             </div>
             
+        <UpcomingInterviews/>
+
             <Link className="add-link" to="/new">+ Add Application</Link>
             
             <div className="filter-bar">

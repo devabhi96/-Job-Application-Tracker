@@ -30,6 +30,8 @@ public class ApplicationEntity {
 
     private String jobUrl;
 
+    private LocalDate interviewDate;
+
     @Column(length = 2000)
     private String notes;
 
@@ -39,4 +41,6 @@ public class ApplicationEntity {
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private UserEntity user;
+
+
 }

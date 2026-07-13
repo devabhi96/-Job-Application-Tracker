@@ -12,6 +12,7 @@ function ApplicationForm() {
     jobTitle: '',
     status: 'APPLIED',
     dateApplied: '',
+    interviewDate: '',
     jobUrl: '',
     notes: '',
   });
@@ -22,7 +23,6 @@ function ApplicationForm() {
  
   useEffect(() => {
     if (isEditMode) {
-      // FIX 1: Changed single quotes to backticks for string interpolation
       api.get(`/applications/${id}`)
         .then(res => setFormData(res.data))
         .catch(err => setError(err.message))
@@ -81,6 +81,10 @@ function ApplicationForm() {
           <label>Date Applied</label>
           <input type="date" name="dateApplied" value={formData.dateApplied} onChange={handleChange} required />
         </div>
+    <div>
+        <label>Interview Date (optional)</label>
+        <input type="date" name="interviewDate" value={formData.interviewDate || ''} onChange={handleChange} />
+    </div>
         <div>
           <label>Job URL</label>
           <input name="jobUrl" value={formData.jobUrl} onChange={handleChange} />

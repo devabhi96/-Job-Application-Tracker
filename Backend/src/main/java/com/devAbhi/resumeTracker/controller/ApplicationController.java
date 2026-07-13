@@ -49,4 +49,10 @@ public class ApplicationController {
         applicationService.deleteApplication(id, principal.getName());
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/upcoming")
+    public List<ApplicationEntity> getUpcomingInterviews(
+        @RequestParam(defaultValue = "7") int days){
+        return applicationService.getUpcomingInterviews(days);
+    }
 }

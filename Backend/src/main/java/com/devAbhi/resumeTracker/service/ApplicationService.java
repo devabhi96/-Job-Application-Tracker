@@ -8,6 +8,7 @@ import com.devAbhi.resumeTracker.repository.UserRepository; // Assuming you have
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -58,6 +59,7 @@ public class ApplicationService {
         existing.setJobTitle(updated.getJobTitle());
         existing.setStatus(updated.getStatus());
         existing.setDateApplied(updated.getDateApplied());
+        existing.setInterviewDate(updated.getInterviewDate());
         existing.setJobUrl(updated.getJobUrl());
         existing.setNotes(updated.getNotes());
         return applicationRepository.save(existing);
@@ -66,5 +68,11 @@ public class ApplicationService {
     public void deleteApplication(Long id,String username){
         ApplicationEntity existing = getApplicationById(id,username);
         applicationRepository.delete(existing);
+    }
+
+    public List<ApplicationEntity> getUpcomingInterviews(int daysAhead){
+        LocalDate today = LocalDate.now();
+        LocalDate future = today.plusDays(daysAhead);
+        return applicationRepository.findByInterviewDateBetween(today,future);
     }
 }
