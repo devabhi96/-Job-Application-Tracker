@@ -10,6 +10,9 @@ function ApplicationList() {
     const [error, setError] = useState(null);
     const [statusFilter, setStatusFilter] = useState('');
     const [search, setSearch] = useState('');
+    const [sortBy,setSortBy] = useState('dateApplied');
+    const [sortOrder,setSortOrder] = useState('desc');
+
 
     const navigate = useNavigate();
 
@@ -23,9 +26,21 @@ function ApplicationList() {
         return acc;
     }, {});
 
-    const sortedApplications = [...applications].sort(
-        (a, b) => new Date(b.dateApplied) - new Date(a.dateApplied)
-    );
+    const sortedApplications = [...applications].sort((a, b) => {
+        let comparison = 0;
+
+        if (sortBy === 'company') {
+            comparison = a.company.localeCompare(b.company);
+        } else if (sortBy === 'interviewDate') {
+            const aDate = a.interviewDate ? new Date(a.interviewDate) : new Date(8640000000000000); // push nulls to the end
+            const bDate = b.interviewDate ? new Date(b.interviewDate) : new Date(8640000000000000);
+            comparison = aDate - bDate;
+        } else {
+            comparison = new Date(a.dateApplied) - new Date(b.dateApplied);
+        }
+
+        return sortOrder === 'asc' ? comparison : -comparison;
+    });
 
     const visibleApplications = sortedApplications.filter(app =>
         app.company.toLowerCase().includes(search.toLowerCase())
@@ -34,7 +49,6 @@ function ApplicationList() {
     useEffect(() => {
         console.log("MY TOKEN IS: ", localStorage.getItem('jwtToken'));
         fetchApplications();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [statusFilter]);
 
     const fetchApplications = () => {
@@ -72,8 +86,6 @@ function ApplicationList() {
                 </button>
             </div>
             
-        <UpcomingInterviews/>
-
             <Link className="add-link" to="/new">+ Add Application</Link>
             
             <div className="filter-bar">
@@ -93,6 +105,19 @@ function ApplicationList() {
                     onChange={(e) => setSearch(e.target.value)}
                     className="search-input"
                 />
+
+        <label></label>
+        <select value ={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+            <option value ="dateApplied">Date Applied</option>
+            <option value ="interviewDate">Interview Date</option>
+            <option value ="company">Company Name</option>
+        </select>
+
+
+        <select value ={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+            <option value="desc">Descending</option>
+            <option value ="asc">Ascending</option>
+        </select>
             </div>
 
             <p className="summary">
@@ -102,6 +127,8 @@ function ApplicationList() {
                 Offer: {statusCounts.OFFER || 0} | 
                 Rejected: {statusCounts.REJECTED || 0}
             </p>
+
+             <UpcomingInterviews/>
 
             {visibleApplications.length === 0 ? (
                 <p>No applications found.</p>
