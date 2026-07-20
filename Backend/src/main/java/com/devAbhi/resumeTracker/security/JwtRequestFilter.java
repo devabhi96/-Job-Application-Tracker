@@ -28,28 +28,28 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        // 1. Look for the Authorization header
+
         final String authorizationHeader = request.getHeader("Authorization");
 
         String username = null;
         String jwt = null;
 
-        // 2. Check if the header exists and starts with "Bearer "
+
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7); // Cut off "Bearer " to get just the token
+            jwt = authorizationHeader.substring(7);
             username = jwtUtil.extractUsername(jwt);
         }
 
-        // 3. If we found a username and the user isn't already logged in...
+
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            // Fetch the user from the database
+
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
-            // 4. Validate the token
+
             if (jwtUtil.isTokenValid(jwt, userDetails.getUsername())) {
 
-                // 5. Tell Spring Security "This user is fully authenticated!"
+
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -58,7 +58,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
         }
 
-        // 6. Continue the request to the next filter or the controller
+
         chain.doFilter(request, response);
     }
 }
