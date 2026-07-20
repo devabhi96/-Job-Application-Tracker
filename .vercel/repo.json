@@ -1,0 +1,11 @@
+{
+  "remoteName": "origin",
+  "projects": [
+    {
+      "id": "prj_m44IAE2A9oH1R06xZFmrXrhRp3Vc",
+      "name": "job-application-tracker",
+      "directory": "Frontend",
+      "orgId": "team_4tV1WhCm7pRmRt3008ZFvffg"
+    }
+  ]
+}
