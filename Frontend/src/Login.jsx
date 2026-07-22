@@ -12,20 +12,20 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            // Hit the open auth endpoint
+           
             const response = await api.post('/auth/login', {
                 username,
                 password
             });
 
-            // Grab the token from the response
+            
             const token = response.data.token;
 
-            // Save it to the browser's local storage
+           
             localStorage.setItem('jwtToken', token);
 
-            // Redirect to your protected applications page
-            navigate('/'); 
+            
+            navigate('/dashboard'); 
             
         } catch (err) {
             setError('Invalid username or password');

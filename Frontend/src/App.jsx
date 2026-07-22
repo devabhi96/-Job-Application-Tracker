@@ -1,24 +1,24 @@
 import React from 'react';
+import LandingPage from './pages/LandingPage';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ViewApplication from './pages/ViewApplication';
 
-// Import your existing pages
+
 import ApplicationList from './pages/ApplicationList';
 import ApplicationForm from './pages/ApplicationForm';
-// Import the new Login component we built
+
 import Login from './Login'; 
 import Register from './Register';
 
-// 1. Create a quick wrapper to protect your private routes
 const ProtectedRoute = ({ children }) => {
     const token = localStorage.getItem('jwtToken');
     
-    // If there is no token, kick them to the login page
+    
     if (!token) {
         return <Navigate to="/login" replace />;
     }
     
-    // If they have a token, let them render the page
+    
     return children;
 };
 
@@ -30,8 +30,10 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         
+        <Route path="/" element={<LandingPage />} />
+
         <Route 
-            path="/" 
+            path="/dashboard" 
             element={
                 <ProtectedRoute>
                     <ApplicationList />

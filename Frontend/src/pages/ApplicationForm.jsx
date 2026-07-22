@@ -44,7 +44,7 @@ function ApplicationForm() {
       ? api.put(`/applications/${id}`, formData)
       : api.post('/applications', formData);
 
-    request.then(() => navigate('/'))
+    request.then(() => navigate('/dashboard'))
       .catch(err => setError(err.message))
       .finally(() => setSubmitting(false));
 
