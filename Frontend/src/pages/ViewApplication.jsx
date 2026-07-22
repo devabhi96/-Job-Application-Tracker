@@ -23,7 +23,7 @@ function ViewApplication() {
 
     return (
         <div className="page">
-            <Link to="/">&larr; Back to list</Link>
+            <Link to="/dashboard">&larr; Back to list</Link>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' }}>
                 <h1>{app.company} — {app.jobTitle}</h1>

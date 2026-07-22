@@ -47,7 +47,6 @@ function ApplicationList() {
     );
 
     useEffect(() => {
-        console.log("MY TOKEN IS: ", localStorage.getItem('jwtToken'));
         fetchApplications();
     }, [statusFilter]);
 
